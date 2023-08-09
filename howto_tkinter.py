@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk # Tk Themed Widgets, newer than classic widgets
+from tkinter.messagebox import showinfo
 
 # Root Window Instance and Title
 root = tk.Tk()
@@ -34,6 +35,26 @@ root.attributes('-alpha', 0.8)
 root.attributes('-topmost', 1)
 # root.lower()
 # root.lift()
+
+# Button
+def green_btn_clicked():
+    showinfo(title="Info", message="You clicked the green button!")
+
+btn_img = tk.PhotoImage(file="./btn_img.png")
+
+green_btn = ttk.Button(
+    root, 
+    text="GREEN", 
+    image=btn_img, 
+    compound=tk.TOP,
+    command=green_btn_clicked)
+# parameter 'compound' to display image and text together(pos of img)
+
+green_btn.pack(ipadx=1, ipady=2, expand=True)
+
+exit_btn = ttk.Button(root, text="EXIT", command=lambda: root.quit())
+exit_btn.pack(ipadx=10, ipady=10, expand=True)
+
 
 # Root Window Mainloop
 root.mainloop()
