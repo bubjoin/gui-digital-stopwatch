@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import ttk
 import time
+import platform
 
 window = tkinter.Tk()
 window_width = 400
@@ -14,12 +15,16 @@ window.geometry(new_geo)
 window.resizable(False, False)
 window.config(bg='white')
 
+frame = tkinter.Frame(window, width=window_width, height=window_height, 
+                      relief="flat", background="white")
+frame.place(x=0, y=0)
+
 def update_label_watch():
     label_watch.config(text=time.strftime("%H:%M:%S", 
                         time.localtime(time.time())))
     label_watch.after(500, update_label_watch)
 
-label_watch = ttk.Label(window, background='white', foreground='black', 
+label_watch = tkinter.Label(frame, background='white', foreground='black', 
                         font=('comfortaa', 40, 'bold'))
 label_watch.place(x=44, y=12)
 update_label_watch()
@@ -87,23 +92,42 @@ class StopWatch():
     def reset_stopwatch(self):
         self.init_stopwatch()
 
-label_stopwatch = ttk.Label(window, background = 'white', foreground='black', 
-                            font=('comfortaa', 40, 'bold'))
+
+label_stopwatch = tkinter.Label(frame, 
+                                background = 'white', foreground='black',
+                                font=('comfortaa', 40, 'bold'))
 label_stopwatch.place(x=44, y=81)
 
 stopwatch_obj = StopWatch(label_stopwatch)
 
-btn_go= ttk.Button(window, text="Go", 
-                        command=stopwatch_obj.click_btn_go)
-btn_go.place(x=50, y=160, width=150, height=50)
+what_platform=platform.system()
+if what_platform=="Darwin":
+    btn_go = tkinter.Button(frame, text="Go", 
+                            borderwidth=0, background="white", relief="solid",
+                            command=stopwatch_obj.click_btn_go)
+    btn_go.place(x=50, y=160, width=148, height=50, bordermode="inside")
 
-btn_stop= ttk.Button(window, text="Stop", 
-                        command=stopwatch_obj.click_btn_stop)
-btn_stop.place(x=200, y=160, width=150, height=50)
+    btn_stop = tkinter.Button(frame, text="Stop",
+                              borderwidth=0, background="white", relief="solid",
+                              command=stopwatch_obj.click_btn_stop)
+    btn_stop.place(x=202, y=160, width=148, height=50, bordermode="inside")
 
-btn_reset = ttk.Button(window, text="Reset", 
-                        command=stopwatch_obj.reset_stopwatch)
-btn_reset.place(x=50, y=220, width=300, height=50)
+    btn_reset = tkinter.Button(frame, text="Reset", 
+                               borderwidth=0, background="white", relief="solid",
+                               command=stopwatch_obj.reset_stopwatch)
+    btn_reset.place(x=50, y=220, width=300, height=50)
+else:
+    btn_go = ttk.Button(frame, text="Go",
+                            command=stopwatch_obj.click_btn_go)
+    btn_go.place(x=50, y=160, width=150, height=50, bordermode="inside")
+
+    btn_stop = ttk.Button(frame, text="Stop",
+                            command=stopwatch_obj.click_btn_stop)
+    btn_stop.place(x=200, y=160, width=150, height=50, bordermode="inside")
+
+    btn_reset = ttk.Button(frame, text="Reset", 
+                            command=stopwatch_obj.reset_stopwatch)
+    btn_reset.place(x=50, y=220, width=300, height=50)
 
 window.title('Gui Digital Stopwatch')
 window.mainloop()
