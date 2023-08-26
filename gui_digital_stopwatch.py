@@ -128,6 +128,8 @@ else:
     btn_reset = ttk.Button(frame, text="Reset", 
                             command=stopwatch_obj.reset_stopwatch)
     btn_reset.place(x=50, y=220, width=300, height=50)
+    
+    window.iconbitmap("icon_title.ico")
 
 window.title('Gui Digital Stopwatch')
 window.mainloop()
